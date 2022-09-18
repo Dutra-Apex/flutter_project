@@ -1,191 +1,73 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(App06Main());
+void main() => runApp(FormApp());
 
-class App06Main extends StatelessWidget {
+class FormApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: _MyHomePage(),
-    );
-  }
-}
-
-// Four in a column
-/*class _MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      child: Center(
+        home: Material(
+            child: Scaffold(
+      appBar: AppBar(
+        title: Text('Food app'),
+      ),
+      drawer: Drawer(
+        backgroundColor: Colors.black38,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "My Pet Shop",
-              textScaleFactor: 2.0,
+              "This is a test",
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.amberAccent,
+              ),
             ),
-            Text("Cats"),
-            Text("Dogs"),
-            Text("Giraffes"),
           ],
         ),
       ),
-    );
-  }
-}*/
-
-// Row within a column
-/*class _MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
-              "My Pet Shop",
-              textScaleFactor: 2.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Cats"),
-                SizedBox(width: 30),
-                Text("Dogs"),
-                SizedBox(width: 30),
-                Text("Giraffes"),
-              ],
-            ),
+            buildRow(
+              'You looking for a main dish, dessert or snack?',
+              2,
+              Colors.blueAccent,
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.normal,
+            )
           ],
         ),
-      ),
-    );
+      ]),
+    )));
   }
-}*/
 
-// Columns within row within column
-/*class _MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "My Pet Shop",
-              textScaleFactor: 2.0,
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  children: <Widget>[
-                    Text(
-                      "Household",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Text("Cats"),
-                    Text("Dogs"),
-                    Text("Burds"),
-                  ],
-                ),
-                SizedBox(width: 30),
-                Column(
-                  children: <Widget>[
-                    Text(
-                      "Exotic",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Text("Giraffes"),
-                    Text("Bats"),
-                    Text("Pangolins"),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}*/
-
-// Adding an image
-class _MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(50.0),
+  Row buildRow(
+    text,
+    flex,
+    color, {
+    fontWeight = FontWeight.normal,
+    fontStyle = FontStyle.normal,
+  }) {
+    return Row(
+      children: [
+        Expanded(
+          flex: flex,
           child: Container(
-            color: Colors.brown,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                color: Colors.yellowAccent,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "My Pet Shop",
-                      textScaleFactor: 2.0,
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              "Household",
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 20,
-                              ),
-                            ),
-                            Text("Cats"),
-                            Text("Dogs"),
-                            Text("Burds"),
-                          ],
-                        ),
-                        SizedBox(width: 30),
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              "Exotic",
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontSize: 20,
-                              ),
-                            ),
-                            Text("Giraffes"),
-                            Text("Bats"),
-                            Text("Pangolins"),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+            color: color,
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: fontWeight,
+                fontStyle: fontStyle,
               ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
