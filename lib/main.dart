@@ -17,18 +17,24 @@ class FormApp extends StatelessWidget {
       drawer: Drawer(
         backgroundColor: Colors.black38,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              "This is a test",
+              "Follow us on Social Media:",
               style: TextStyle(
-                fontSize: 30,
-                color: Colors.amberAccent,
+                fontSize: 25,
+                color: Colors.white,
               ),
             ),
-            buildRow(
-              'Test'
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+            getTexRow(
+              'Social media buttons'
             )
+              ],
+            ),
           ],
         ),
       ),
@@ -36,98 +42,92 @@ class FormApp extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            buildRow(
+            getTexRow(
               'Regarding the App X...',
               fontSize: 35.0,
               textAlign: TextAlign.center,
               fieldColor: Colors.black45,
               textColor: Colors.white,
             ),
-            buildRow(
+            getTexRow(
               '1) How many hours per day do you use this app?',
               fontSize: 30.0,
               textAlign: TextAlign.start,
               fieldColor: Colors.lightBlueAccent,
             ),
-            buildRow(
+            getTexRow(
               'TextField (takes only numbers)',
             ),
-            buildRow(
-              '2) How to you review the app?',
+            getTexRow(
+              '2) How do you review the app?',
               fontSize: 30.0,
               textAlign: TextAlign.start,
               fieldColor: Colors.lightBlueAccent,
             ),
-            buildRow('Likert Scale'),
-            buildRow(
+            getTexRow('Likert Scale'),
+            getTexRow(
               '3) How much money have you spent on the app?',
               fontSize: 30.0,
               textAlign: TextAlign.start,
               fieldColor: Colors.lightBlueAccent,
             ),
-            buildRow('Texfield (takes only numbers)'),
-            buildRow(
-              '4) Have you ever intentionally clicked on an add showed by the app?',
+            getTexRow('Texfield (takes only numbers)'),
+            getTexRow(
+              '4) Have you ever intentionally clicked on an ad showed by the app?',
               fontSize: 30.0,
               textAlign: TextAlign.start,
               fieldColor: Colors.lightBlueAccent,
             ),
-            buildRow('Selection menu (yes/no)'),
-            buildRow(
+            getTexRow('Selection menu (yes/no)'),
+            getTexRow(
               '5) Did you wish you spent less time on the app?',
               fontSize: 30.0,
               textAlign: TextAlign.start,
               fieldColor: Colors.lightBlueAccent,
             ),
-            buildRow('Selection Menu'),
-            buildRow(
+            getTexRow('Selection Menu'),
+            getTexRow(
               '6) How did you find this app?',
               fontSize: 30.0,
               textAlign: TextAlign.start,
               fieldColor: Colors.lightBlueAccent,
             ),
-            buildRow("Dropdown menu (Ad, friend, etc)"),
-            buildRow(
-              '7) Did you wish you spent less time on the app?',
-              fontSize: 30.0,
-              textAlign: TextAlign.start,
-              fieldColor: Colors.lightBlueAccent,
-            ),
-            buildRow(
+            getTexRow("Dropdown menu (Ad, friend, etc)"),
+            getTexRow(
               'Now tell us some information about you:',
               fontSize: 30.0,
               textAlign: TextAlign.center,
               fieldColor: Colors.black45,
               textColor: Colors.white,
             ),
-            buildRow(
+            getTexRow(
               '1) What country are you from?',
               fontSize: 30.0,
               textAlign: TextAlign.start,
               fieldColor: Colors.green,
             ),
-            buildRow('TextField'),
-            buildRow(
+            getTexRow('TextField'),
+            getTexRow(
               '2) How old are you',
               fontSize: 30.0,
               textAlign: TextAlign.start,
               fieldColor: Colors.green,
             ),
-            buildRow('Dropdown menu with age ranges'),
-            buildRow(
+            getTexRow('Dropdown menu with age ranges'),
+            getTexRow(
               '3) What is your favorite food?',
               fontSize: 30.0,
               textAlign: TextAlign.start,
               fieldColor: Colors.green,
             ),
-            buildRow('TextField'),
-            buildRow(
+            getTexRow('TextField'),
+            getTexRow(
               "Here's how your answers compare to the other users:",
               fontSize: 30.0,
               textAlign: TextAlign.start,
               fieldColor: Colors.red,
             ),
-            buildRow(
+            getTexRow(
               'Some graphs displaying how the user compares with the others'
             )
           ],
@@ -136,7 +136,7 @@ class FormApp extends StatelessWidget {
     )));
   }
 
-  Row buildRow(
+  Row getTexRow(
     text, {
     //height = 25.0,
     //width = 100.0,
