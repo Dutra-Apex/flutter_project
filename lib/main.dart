@@ -2,7 +2,18 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(FormApp());
 
-class FormApp extends StatelessWidget {
+class FormApp extends StatefulWidget {
+  @override
+  State<FormApp> createState() => _FormAppState();
+}
+
+class _FormAppState extends State<FormApp> {
+
+  var controller1 = TextEditingController();
+  var controller2 = TextEditingController();
+  var text1 = "";
+  var text2 = "";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -55,8 +66,18 @@ class FormApp extends StatelessWidget {
               textAlign: TextAlign.start,
               fieldColor: Colors.lightBlueAccent,
             ),
-            getTexRow(
-              'TextField (takes only numbers)',
+            TextField(
+              keyboardType: TextInputType.number,
+              controller: controller1,
+              onChanged: changeText,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter a number...'
+              ),
             ),
             getTexRow(
               '2) How do you review the app?',
@@ -71,7 +92,24 @@ class FormApp extends StatelessWidget {
               textAlign: TextAlign.start,
               fieldColor: Colors.lightBlueAccent,
             ),
-            getTexRow('Texfield (takes only numbers)'),
+            TextField(
+              keyboardType: TextInputType.number,
+              controller: controller2,
+              //onChanged: changeText,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter a number...',
+                  prefix: Text(
+                      '\$',
+                    textAlign: TextAlign.center,
+                  ),
+                //prefixStyle: TextStyle()
+              ),
+            ),
             getTexRow(
               '4) Have you ever intentionally clicked on an ad showed by the app?',
               fontSize: 30.0,
@@ -136,6 +174,10 @@ class FormApp extends StatelessWidget {
     )));
   }
 
+  changeText(newText){
+    setState(() => text1 = newText);
+  }
+
   Row getTexRow(
     text, {
     //height = 25.0,
@@ -173,3 +215,7 @@ class FormApp extends StatelessWidget {
     );
   }
 }
+
+
+// https://docs.flutter.dev/cookbook/forms/text-input
+// https://stackoverflow.com/questions/65849904/how-to-add-dollar-sign-on-the-right-hand-side-of-the-textfield-in-flutter-app
