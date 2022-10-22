@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(FormApp());
 
@@ -10,8 +11,8 @@ class FormApp extends StatefulWidget {
 class _FormAppState extends State<FormApp> {
   var controller1 = TextEditingController();
   var controller2 = TextEditingController();
-  var text1 = "";
-  var text2 = "";
+  var text1 = '';
+  var text2 = '';
   var dropdownValue1;
   var slidervalue1 = 1.0;
   var slidervalue2 = 1.0;
@@ -19,6 +20,7 @@ class _FormAppState extends State<FormApp> {
   var switchValue2 = false;
   var checkBoxValue1 = false;
   var checkBoxValue2 = false;
+  var results_display = 'test';
 
   var dropdown1 = [
     DropdownMenuItem(
@@ -87,6 +89,9 @@ class _FormAppState extends State<FormApp> {
               controller: controller1,
               onChanged: changeText,
               textAlign: TextAlign.center,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
               style: TextStyle(
                 fontSize: 20,
               ),
@@ -179,13 +184,17 @@ class _FormAppState extends State<FormApp> {
             //   fieldColor: Colors.green,
             // ),
             // getTexRow('TextField'),
+            SizedBox(
+              height: 40.0,
+            ),
+            ElevatedButton(onPressed: getResultValues, child: Text('Submit')),
             getTexRow(
               "Here's how your answers compare to the other users:",
               fontSize: 30.0,
               textAlign: TextAlign.start,
               fieldColor: Colors.red,
             ),
-            getResults(),
+            getTexRow(results_display)
           ],
         ),
       ]),
@@ -294,9 +303,9 @@ class _FormAppState extends State<FormApp> {
     );
   }
 
-  String getResultValues() {
+  getResultValues() {
     var results = '';
-    if (text1 == '1' || text1 == '2' || text1 == '3') {
+    if (int.parse(text1) < 3) {
       results +=
           'You spend little to no time on the App. 68% of users spend 3+ hours on the app.';
     } else {
@@ -321,17 +330,18 @@ class _FormAppState extends State<FormApp> {
       results += "\n\n93% of users also wish they spent less time on the app";
     }
 
-    return results;
+    results_display = results;
+    setState(() {});
   }
 
-  Row getResults() {
-    return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-      Text(
-        getResultValues(),
-        textScaleFactor: 1.2,
-      )
-    ]);
-  }
+  // Row getResults() {
+  //   return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+  //     Text(
+  //       getResultValues(),
+  //       textScaleFactor: 1.2,
+  //     )
+  //   ]);
+  // }
 }
 
 // https://docs.flutter.dev/cookbook/forms/text-input
