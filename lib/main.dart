@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() => runApp(FormApp());
+void main() => runApp(const FormApp());
 
 class FormApp extends StatefulWidget {
   const FormApp({super.key});
@@ -363,5 +363,3 @@ class _FormAppState extends State<FormApp> {
   }
 }
 
-// https://docs.flutter.dev/cookbook/forms/text-input
-// https://stackoverflow.com/questions/65849904/how-to-add-dollar-sign-on-the-right-hand-side-of-the-textfield-in-flutter-app
