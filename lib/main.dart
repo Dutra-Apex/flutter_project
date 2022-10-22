@@ -22,7 +22,8 @@ class _FormAppState extends State<FormApp> {
   var switchValue2 = false;
   var checkBoxValue1 = false;
   var checkBoxValue2 = false;
-  var resultsDisplay = "Click the Submit button to see how your usage compares with other users.";
+  var resultsDisplay =
+      "Click the Submit button to see how your usage compares with other users.";
 
   var dropdown1 = [
     const DropdownMenuItem(
@@ -125,14 +126,13 @@ class _FormAppState extends State<FormApp> {
                 fontSize: 20,
               ),
               decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter a number...',
-                prefix: Text(
-                  '\$',
-                  textAlign: TextAlign.center,
-                ),
-                prefixStyle: TextStyle()
-              ),
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter a number...',
+                  prefix: Text(
+                    '\$',
+                    textAlign: TextAlign.center,
+                  ),
+                  prefixStyle: TextStyle()),
             ),
             getTextRow(
               '4) Have you ever intentionally clicked on an ad showed by the app?',
@@ -193,7 +193,6 @@ class _FormAppState extends State<FormApp> {
             // ),
             // getTextRow('TextField'),
 
-
             getTextRow(
               "Here's how your answers compare to the other users:",
               fontSize: 30.0,
@@ -203,7 +202,8 @@ class _FormAppState extends State<FormApp> {
             const SizedBox(
               height: 40.0,
             ),
-            ElevatedButton(onPressed: getResultValues, child: const Text('Submit')),
+            ElevatedButton(
+                onPressed: getResultValues, child: const Text('Submit')),
             getTextRow(resultsDisplay)
           ],
         ),
@@ -249,7 +249,6 @@ class _FormAppState extends State<FormApp> {
     setState(() => checkBoxValue2 = newValue);
   }
 
-
   Widget buildSlider(sliderValue, updateSlider) {
     return Column(
       children: [
@@ -267,7 +266,6 @@ class _FormAppState extends State<FormApp> {
       ],
     );
   }
-
 
   Row getSwitch(
     value,
@@ -316,8 +314,8 @@ class _FormAppState extends State<FormApp> {
     );
   }
 
- // Function to get the results based on the user answers
- // Updates the 'results_display' variable and updates the screen state
+  // Function to get the results based on the user answers
+  // Updates the 'results_display' variable and updates the screen state
   getResultValues() {
     var results = '';
     if (int.parse(text1) < 3) {
@@ -334,7 +332,8 @@ class _FormAppState extends State<FormApp> {
     if (int.parse(text2) < 50) {
       results += "\n\nYou spent less money than 58% of the users.";
     } else {
-      results += "\n\n42% percent of users spent as much money as you did (or more)";
+      results +=
+          "\n\n42% percent of users spent as much money as you did (or more)";
     }
     if (switchValue2 == false) {
       results +=
@@ -349,9 +348,9 @@ class _FormAppState extends State<FormApp> {
     } else {
       results += "\n\n93% of users also wish they spent less time on the app";
     }
-    if (dropdownValue1 == 1){
+    if (dropdownValue1 == 1) {
       results += "\n\n You and other 33% of users found this app through ads";
-    } else if (dropdownValue1 == 2){
+    } else if (dropdownValue1 == 2) {
       results += "\n\n About 22% of users found this app through friends";
     } else if (dropdownValue1 == 3) {
       results += "\n\n About 45% of users found this app through influencers";
@@ -362,4 +361,3 @@ class _FormAppState extends State<FormApp> {
     setState(() {});
   }
 }
-
