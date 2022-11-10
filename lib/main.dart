@@ -10,6 +10,18 @@ class FormApp extends StatefulWidget {
   State<FormApp> createState() => _FormAppState();
 }
 
+class Results {
+  String results = "";
+
+  Results(
+      this.results,
+      );
+}
+
+var results = List<Results>.empty(
+  growable: true,
+);
+
 class _FormAppState extends State<FormApp> {
   var controller1 = TextEditingController();
   var controller2 = TextEditingController();
@@ -317,47 +329,85 @@ class _FormAppState extends State<FormApp> {
   // Function to get the results based on the user answers
   // Updates the 'results_display' variable and updates the screen state
   getResultValues() {
-    var results = '';
+    //var results = '';
     if (int.parse(text1) < 3) {
-      results +=
-          'You spend little to no time on the App. 68% of users spend 3+ hours on the app.';
+      results.add( Results(
+          'You spend little to no time on the App. 68% of users spend 3+ hours on the app.'));
     } else {
-      results += 'You spent as much time as 68% of the users.';
+      results.add( Results ( 'You spent as much time as 68% of the users.'));
     }
-    if (sliderValue1 >= 5) {
-      results += "\n\nYou're as satisfied with this app as 22% of the users.";
-    } else {
-      results += "\n\nYou're as satisfied with this app as 78% of the users.";
-    }
-    if (int.parse(text2) < 50) {
-      results += "\n\nYou spent less money than 58% of the users.";
-    } else {
-      results +=
-          "\n\n42% percent of users spent as much money as you did (or more)";
-    }
-    if (switchValue2 == false) {
-      results +=
-          '\n\n33% of users also clicked on the ads displayed by the app';
-    } else {
-      results +=
-          '\n\n67% of users have never clicked on the ads displayed by this app';
-    }
-    if (switchValue1 == false) {
-      results +=
-          '\n\nOnly 7% of users are satisfied with the amount of time they spent on the app ';
-    } else {
-      results += "\n\n93% of users also wish they spent less time on the app";
-    }
-    if (dropdownValue1 == 1) {
-      results += "\n\n You and other 33% of users found this app through ads";
-    } else if (dropdownValue1 == 2) {
-      results += "\n\n About 22% of users found this app through friends";
-    } else if (dropdownValue1 == 3) {
-      results += "\n\n About 45% of users found this app through influencers";
-    } else if (dropdownValue1 == 4) {
-      results += "\n\n Only 8% of users had this app pre-installed";
-    }
-    resultsDisplay = results;
-    setState(() {});
+    // if (sliderValue1 >= 5) {
+    //   results += "\n\nYou're as satisfied with this app as 22% of the users.";
+    // } else {
+    //   results += "\n\nYou're as satisfied with this app as 78% of the users.";
+    // }
+    // if (int.parse(text2) < 50) {
+    //   results += "\n\nYou spent less money than 58% of the users.";
+    // } else {
+    //   results +=
+    //       "\n\n42% percent of users spent as much money as you did (or more)";
+    // }
+    // if (switchValue2 == false) {
+    //   results +=
+    //       '\n\n33% of users also clicked on the ads displayed by the app';
+    // } else {
+    //   results +=
+    //       '\n\n67% of users have never clicked on the ads displayed by this app';
+    // }
+    // if (switchValue1 == false) {
+    //   results +=
+    //       '\n\nOnly 7% of users are satisfied with the amount of time they spent on the app ';
+    // } else {
+    //   results += "\n\n93% of users also wish they spent less time on the app";
+    // }
+    // if (dropdownValue1 == 1) {
+    //   results += "\n\n You and other 33% of users found this app through ads";
+    // } else if (dropdownValue1 == 2) {
+    //   results += "\n\n About 22% of users found this app through friends";
+    // } else if (dropdownValue1 == 3) {
+    //   results += "\n\n About 45% of users found this app through influencers";
+    // } else if (dropdownValue1 == 4) {
+    //   results += "\n\n Only 8% of users had this app pre-installed";
+    // }
+    //resultsDisplay = results;
+    //setState(() {});
+    () => goToResultsPage(results);
+  }
+
+  goToResultsPage(results) async {
+    Results results =  await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ResultsPage(),
+      settings: RouteSettings(
+        arguments: resultsDisplay,
+      ),
+      ),
+    );
+  }
+
+}
+
+class ResultsPage extends StatefulWidget{
+  @override
+  State<ResultsPage> createState() => _ResultsPageState();
+}
+
+
+class _ResultsPageState extends State<ResultsPage> {
+  @override
+  Widget build(BuildContext context){
+    var results = ModalRoute.of(context)!.settings.arguments as Results;
+    return Material(
+      child: Column(
+        children: [
+          Row(
+           children: [
+             Text(results.results),
+           ] ,
+          )
+        ]
+      )
+    );
   }
 }
+
