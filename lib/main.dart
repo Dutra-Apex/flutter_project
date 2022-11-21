@@ -355,7 +355,7 @@ class _FormAppState extends State<FormApp> {
   }
 
   // Function to get the results based on the user answers
-  // Updates the 'results_display' variable and updates the screen state
+  // Returns a string "results"
   getResultValues() {
     var results = '';
     if (int.parse(text1) < 3) {
@@ -405,7 +405,6 @@ class _FormAppState extends State<FormApp> {
 // Page containing the user's results
 class ResultsPage extends StatelessWidget {
   String resultsDisplay;
-
   ResultsPage({super.key, required this.resultsDisplay});
 
   @override
