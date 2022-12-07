@@ -62,6 +62,7 @@ class _FormAppState extends State<FormApp> {
           'Software Evaluation App',
           textAlign: TextAlign.center,
         ),
+        backgroundColor: Colors.black38,
       ),
       drawer: Drawer(
         backgroundColor: Colors.black38,
@@ -89,51 +90,51 @@ class _FormAppState extends State<FormApp> {
           children: [
             getTextRow(
               'Regarding the TikTok App',
-              fontSize: 35.0,
+              fontSize: 25.0,
               textAlign: TextAlign.center,
-              fieldColor: Colors.black45,
+              fieldColor: Colors.black,
               textColor: Colors.white,
             ),
             getTextRow(
               '1) How many hours per day do you use this app?',
-              fontSize: 30.0,
+              fontSize: 20.0,
               textAlign: TextAlign.start,
-              fieldColor: Colors.lightBlueAccent,
+              fieldColor: Colors.white,
             ),
             getTextField(controller1, changeText),
             getTextRow(
               '2) How do you review the app?',
-              fontSize: 30.0,
+              fontSize: 20.0,
               textAlign: TextAlign.start,
-              fieldColor: Colors.lightBlueAccent,
+              fieldColor: Colors.white,
             ),
             buildSlider(sliderValue1, updateSlider1),
             getTextRow(
               '3) How much money have you spent on the app?',
-              fontSize: 30.0,
+              fontSize: 20.0,
               textAlign: TextAlign.start,
-              fieldColor: Colors.lightBlueAccent,
+              fieldColor: Colors.white,
             ),
             getTextField(controller2, changeText2),
             getTextRow(
               '4) Have you ever intentionally clicked on an ad showed by the app?',
-              fontSize: 30.0,
+              fontSize: 20.0,
               textAlign: TextAlign.start,
-              fieldColor: Colors.lightBlueAccent,
+              fieldColor: Colors.white,
             ),
             getSwitch(switchValue2, handleSwitch2, '$switchValue2'),
             getTextRow(
               '5) Did you wish you spent less time on the app?',
-              fontSize: 30.0,
+              fontSize: 20.0,
               textAlign: TextAlign.start,
-              fieldColor: Colors.lightBlueAccent,
+              fieldColor: Colors.white,
             ),
             getSwitch(switchValue1, handleSwitch1, '$switchValue1'),
             getTextRow(
               '6) How did you find this app?',
-              fontSize: 30.0,
+              fontSize: 20.0,
               textAlign: TextAlign.start,
-              fieldColor: Colors.lightBlueAccent,
+              fieldColor: Colors.white,
             ),
             getDropDown(dropdown1, refreshScreen, dropdownValue1),
 
@@ -170,9 +171,9 @@ class _FormAppState extends State<FormApp> {
 
             getTextRow(
               "Here's how your answers compare to the other users:",
-              fontSize: 30.0,
+              fontSize: 20.0,
               textAlign: TextAlign.start,
-              fieldColor: Colors.red,
+              fieldColor: Colors.white,
             ),
             const SizedBox(
               height: 40.0,
@@ -389,15 +390,21 @@ class _FormAppState extends State<FormApp> {
       results += "\n\n93% of users also wish they spent less time on the app";
     }
     if (dropdownValue1 == 1) {
-      results += "\n\n You and other 33% of users found this app through ads";
+      results += "\n\n You and other 33% of users found this app through ads.";
     } else if (dropdownValue1 == 2) {
-      results += "\n\n About 22% of users found this app through friends";
+      results += "\n\n About 22% of users found this app through friends.";
     } else if (dropdownValue1 == 3) {
-      results += "\n\n About 45% of users found this app through influencers";
+      results += "\n\n About 45% of users found this app through influencers.";
     } else if (dropdownValue1 == 4) {
-      results += "\n\n Only 8% of users had this app pre-installed";
+      results += "\n\n Only 8% of users had this app pre-installed.";
     }
-    results += "\n\n";
+    if (int.parse(text1) > 4) {
+      results +=
+      '\n\nBased on your answers, you should spend less time on TikTok.';
+    } else {
+      results += '\n\nBased on your answers, you spend a reasonable amount of time on TikTok, and you should keep using it.';
+    }
+    results += "";
     return results;
   }
 }
@@ -418,7 +425,7 @@ class ResultsPage extends StatelessWidget {
           Text(
             resultsDisplay,
             style: const TextStyle(
-              fontSize: 25,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
