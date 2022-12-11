@@ -1,5 +1,8 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(const MyApp());
 
@@ -24,8 +27,11 @@ class FormApp extends StatefulWidget {
 }
 
 class _FormAppState extends State<FormApp> {
+
   var controller1 = TextEditingController();
   var controller2 = TextEditingController();
+  var controller3 = TextEditingController();
+  var name = '';
   var text1 = '';
   var text2 = '';
   var dropdownValue1 = 0;
@@ -69,6 +75,19 @@ class _FormAppState extends State<FormApp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            ElevatedButton(
+                onPressed: isUserDone()
+                    ? () => {
+                  // Navigator to the next page.
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => AdminPage()
+                      ),
+                    ),
+
+                }
+                    : null,
+                child: const Text("Submit")),
             const Text(
               "Follow us on Social Media:",
               style: TextStyle(
@@ -95,6 +114,14 @@ class _FormAppState extends State<FormApp> {
               fieldColor: Colors.black,
               textColor: Colors.white,
             ),
+            getTextRow(
+              'Enter your username: ',
+              fontSize: 25.0,
+              textAlign: TextAlign.center,
+              fieldColor: Colors.black,
+              textColor: Colors.white,
+            ),
+            TextField(controller:controller3, textAlign: TextAlign.center, style: const TextStyle(fontSize: 20),),
             getTextRow(
               '1) How many hours per day do you use this app?',
               fontSize: 20.0,
@@ -137,37 +164,6 @@ class _FormAppState extends State<FormApp> {
               fieldColor: Colors.white,
             ),
             getDropDown(dropdown1, refreshScreen, dropdownValue1),
-
-            // List of questions that I plan on implementing on the final version
-
-            // getTextRow(
-            //   'Now tell us some information about you:',
-            //   fontSize: 30.0,
-            //   textAlign: TextAlign.center,
-            //   fieldColor: Colors.black45,
-            //   textColor: Colors.white,
-            // ),
-            // getTextRow(
-            //   '1) What country are you from?',
-            //   fontSize: 30.0,
-            //   textAlign: TextAlign.start,
-            //   fieldColor: Colors.green,
-            // ),
-            // getTextRow('TextField'),
-            // getTextRow(
-            //   '2) How old are you',
-            //   fontSize: 30.0,
-            //   textAlign: TextAlign.start,
-            //   fieldColor: Colors.green,
-            // ),
-            // getTextRow('Dropdown menu with age ranges'),
-            // getTextRow(
-            //   '3) What is your favorite food?',
-            //   fontSize: 30.0,
-            //   textAlign: TextAlign.start,
-            //   fieldColor: Colors.green,
-            // ),
-            // getTextRow('TextField'),
 
             getTextRow(
               "Here's how your answers compare to the other users:",
@@ -405,14 +401,80 @@ class _FormAppState extends State<FormApp> {
       results += '\n\nBased on your answers, you spend a reasonable amount of time on TikTok, and you should keep using it.';
     }
     results += "";
+
+    _save();
     return results;
+  }
+
+  _save() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(controller3.text, 'Number of hours spent: ${controller1.text} \n'
+        'Money Spent on the app: ${controller2.text} \n'
+        'Review of the app: ${sliderValue1} \n');
+  }
+}
+
+
+// Page containing the user's results
+class ResultsPage extends StatefulWidget {
+  String resultsDisplay;
+  ResultsPage({super.key, required this.resultsDisplay});
+
+  @override
+  State<ResultsPage> createState() => _ResultsPageState();
+}
+
+class _ResultsPageState extends State<ResultsPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Here are your results:'),
+      ),
+      body: Center(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(
+            widget.resultsDisplay,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          ElevatedButton(
+              child: const Text(
+                'Go Back',
+                textScaleFactor: 1.5,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(
+                  MaterialPageRoute(
+                    builder: (context) => const FormApp(),
+                  ),
+                );
+              }),
+        ]),
+      ),
+    );
   }
 }
 
 // Page containing the user's results
-class ResultsPage extends StatelessWidget {
-  String resultsDisplay;
-  ResultsPage({super.key, required this.resultsDisplay});
+class AdminPage extends StatefulWidget {
+  @override
+  State<AdminPage> createState() => _AdminPageState();
+}
+
+class _AdminPageState extends State<AdminPage> {
+  String _whatWasRead = "";
+  var controller = TextEditingController();
+  var text = "";
+
+  _read() async {
+    final prefs = await SharedPreferences.getInstance();
+    _whatWasRead = prefs.getString(controller.text) ?? "";
+    setState(() {
+    });;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -423,7 +485,12 @@ class ResultsPage extends StatelessWidget {
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(
-            resultsDisplay,
+            'Enter an ID to fetch data from:',
+          ),
+          TextField(controller: controller),
+          ElevatedButton(onPressed: _read, child: Text('Get previous results')),
+          Text(
+            _whatWasRead,
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
