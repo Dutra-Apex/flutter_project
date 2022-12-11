@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -122,7 +120,7 @@ class _FormAppState extends State<FormApp> {
               controller: controller3,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   hintText: '...', border: OutlineInputBorder()),
             ),
             getTextRow(
@@ -427,7 +425,7 @@ class _FormAppState extends State<FormApp> {
         controller3.text,
         'Number of hours spent: ${controller1.text} \n'
         'Money Spent on the app: ${controller2.text} \n'
-        'Review of the app: ${sliderValue1} \n');
+        'Review of the app: $sliderValue1 \n');
   }
 }
 
@@ -453,7 +451,7 @@ class _ResultsPageState extends State<ResultsPage> {
           Text(
             widget.resultsDisplay,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 15,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -501,11 +499,11 @@ class _AdminPageState extends State<AdminPage> {
       ),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(
+          const Text(
             'Enter an ID to fetch data from:',
           ),
           TextField(controller: controller),
-          ElevatedButton(onPressed: _read, child: Text('Get previous results')),
+          ElevatedButton(onPressed: _read, child: const Text('Get previous results')),
           Text(
             _whatWasRead,
             style: const TextStyle(
