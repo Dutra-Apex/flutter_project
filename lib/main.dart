@@ -118,6 +118,7 @@ class _FormAppState extends State<FormApp> {
             ),
             TextField(
               controller: controller3,
+              onChanged: changeText3,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20),
               decoration: const InputDecoration(
@@ -204,6 +205,10 @@ class _FormAppState extends State<FormApp> {
     setState(() => text2 = newText);
   }
 
+  void changeText3(newText) {
+    setState(() => name = newText);
+  }
+
   void refreshScreen(newValue) {
     setState(() => dropdownValue1 = newValue);
   }
@@ -241,10 +246,10 @@ class _FormAppState extends State<FormApp> {
   }
 
   bool isAdmin() {
-    if (name == 'secret' || text1 == 'passage') {
+    if (name == 'secret') {
       return true;
     } else {
-      return true;
+      return false;
     }
   }
 
