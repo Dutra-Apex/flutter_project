@@ -27,7 +27,6 @@ class FormApp extends StatefulWidget {
 }
 
 class _FormAppState extends State<FormApp> {
-
   var controller1 = TextEditingController();
   var controller2 = TextEditingController();
   var controller3 = TextEditingController();
@@ -76,18 +75,16 @@ class _FormAppState extends State<FormApp> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             ElevatedButton(
-                onPressed: isUserDone()
+                onPressed: isAdmin()
                     ? () => {
-                  // Navigator to the next page.
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => AdminPage()
-                      ),
-                    ),
-
-                }
+                          // Navigator to the next page.
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => AdminPage()),
+                          ),
+                        }
                     : null,
-                child: const Text("Submit")),
+                child: const Text("Admin only")),
             const Text(
               "Follow us on Social Media:",
               style: TextStyle(
@@ -121,7 +118,13 @@ class _FormAppState extends State<FormApp> {
               fieldColor: Colors.black,
               textColor: Colors.white,
             ),
-            TextField(controller:controller3, textAlign: TextAlign.center, style: const TextStyle(fontSize: 20),),
+            TextField(
+              controller: controller3,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 20),
+              decoration: InputDecoration(
+                  hintText: '...', border: OutlineInputBorder()),
+            ),
             getTextRow(
               '1) How many hours per day do you use this app?',
               fontSize: 20.0,
@@ -137,7 +140,7 @@ class _FormAppState extends State<FormApp> {
             ),
             buildSlider(sliderValue1, updateSlider1),
             getTextRow(
-              '3) How much money have you spent on the app?',
+              '3) On average, how much money do you make on the app per month?',
               fontSize: 20.0,
               textAlign: TextAlign.start,
               fieldColor: Colors.white,
@@ -164,7 +167,6 @@ class _FormAppState extends State<FormApp> {
               fieldColor: Colors.white,
             ),
             getDropDown(dropdown1, refreshScreen, dropdownValue1),
-
             getTextRow(
               "Here's how your answers compare to the other users:",
               fontSize: 20.0,
@@ -233,8 +235,16 @@ class _FormAppState extends State<FormApp> {
   }
 
   bool isUserDone() {
-    if (text1 == '' || text2 == '') {
+    if (text1 == '' || text2 == '' || name == '') {
       return false;
+    } else {
+      return true;
+    }
+  }
+
+  bool isAdmin() {
+    if (name == 'secret' || text1 == 'passage') {
+      return true;
     } else {
       return true;
     }
@@ -366,18 +376,18 @@ class _FormAppState extends State<FormApp> {
     } else {
       results += "\n\nYou're as satisfied with this app as 78% of the users.";
     }
-    if (int.parse(text2) < 50) {
-      results += "\n\nYou spent less money than 58% of the users.";
+    if (int.parse(text2) == 0) {
+      results += "\n\n70% of the users also don't make any money from this app.";
     } else {
       results +=
-          "\n\n42% percent of users spent as much money as you did (or more)";
+          "\n\nYou and 30% of the users have some sort of income from this app.";
     }
     if (switchValue2 == false) {
       results +=
-          '\n\n33% of users also clicked on the ads displayed by the app';
+          '\n\n33% of users also clicked on the ads displayed by the app.';
     } else {
       results +=
-          '\n\n67% of users have never clicked on the ads displayed by this app';
+          '\n\n67% of users have never clicked on the ads displayed by this app.';
     }
     if (switchValue1 == false) {
       results +=
@@ -394,11 +404,16 @@ class _FormAppState extends State<FormApp> {
     } else if (dropdownValue1 == 4) {
       results += "\n\n Only 8% of users had this app pre-installed.";
     }
-    if (int.parse(text1) > 4) {
+    if (int.parse(text1) > 4 && int.parse(text2) == 0 && switchValue2 == false) {
+      results += '\n\n\n We recommend that you spend less time on the app. You are not making any money to justify the time you spend on the app';
+    } else if (int.parse(text1) > 4 && int.parse(text2) == 0 && switchValue2 == true) {
+      results += '\n\n\n You are right in wanting to spend less time on the app, its draining away your time :( .';
+    } else if (int.parse(text1) > 4 && int.parse(text2) != 0) {
+      results += '\n\n\n Since you are able to make money on the app, we recommend that you spend more time on the app and try to expand your hustle.';
+    }
+    else {
       results +=
-      '\n\nBased on your answers, you should spend less time on TikTok.';
-    } else {
-      results += '\n\nBased on your answers, you spend a reasonable amount of time on TikTok, and you should keep using it.';
+          '\n\nBased on your answers, you spend a reasonable amount of time on TikTok, and you should keep using it.';
     }
     results += "";
 
@@ -408,16 +423,18 @@ class _FormAppState extends State<FormApp> {
 
   _save() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(controller3.text, 'Number of hours spent: ${controller1.text} \n'
+    prefs.setString(
+        controller3.text,
+        'Number of hours spent: ${controller1.text} \n'
         'Money Spent on the app: ${controller2.text} \n'
         'Review of the app: ${sliderValue1} \n');
   }
 }
 
-
 // Page containing the user's results
 class ResultsPage extends StatefulWidget {
   String resultsDisplay;
+
   ResultsPage({super.key, required this.resultsDisplay});
 
   @override
@@ -472,8 +489,8 @@ class _AdminPageState extends State<AdminPage> {
   _read() async {
     final prefs = await SharedPreferences.getInstance();
     _whatWasRead = prefs.getString(controller.text) ?? "";
-    setState(() {
-    });;
+    setState(() {});
+    ;
   }
 
   @override
